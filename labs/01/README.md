@@ -78,6 +78,33 @@ Para esta etapa la del curso se planea mantener a Zookeeper en un nodo separado 
 
 No necesitamos descargar Zookeeper por separado. La descarga de Kafka también incluye una copia de Zookeeper. Lo primero es revisar el archivo de configuración de Zookeeper. 
 
-1- Abramos el archivo zookeeper.properties.
+1- Revisemos el contenido del archivo zookeeper.properties.
+
+```
+cat $HOME/kafka_2.13-3.2.0/config/zookeeper.properties 
+```
+
+2- Creamos una carpeta para almacenar la configuración de nuestro Zookeeper
+
+```
+sudo mkdir -p /var/lib/zookeeper
+```
+
+3- Otorgamos los permisos de acceso a nuestro usuario en mi caso a ubuntu, pero deben verificar el usuario asignado a sus maquinas.
+```
+sudo chown ubuntu:ubuntu /var/lib/zookeeper
+```
+
+4- Copiamos la configuración por defecto a nuestra nueva carpeta.
+```
+cp $HOME/kafka_2.13-3.2.0/config/zookeeper.properties /var/lib/zookeeper/zookeeper.properties
+```
+
+5- Cambiamos dentro del archivo /var/lib/zookeeper/zookeeper.properties, la direccion de dataDir=/tmp/zookeeper por
+```
+dataDir=/var/lib/zookeeper
+```
+
+
 
 
