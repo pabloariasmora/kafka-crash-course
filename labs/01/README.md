@@ -38,7 +38,7 @@ sudo apt install wget -y
 6- Ahora edescargar los binarios de Apache Kafka. Utilizando el comando wget.
 
 ```
-wget http://redrockdigimark.com/apachemirror/kafka/2.0.0/kafka_2.12-2.0.0.tgz
+wget https://dlcdn.apache.org/kafka/3.2.0/kafka_2.13-3.2.0.tgz
 
 ```
 
@@ -47,3 +47,26 @@ wget http://redrockdigimark.com/apachemirror/kafka/2.0.0/kafka_2.12-2.0.0.tgz
 ```
 tar -xzf kafka_2.13-3.2.0.tgz
 ```
+
+8- Abra el .bash_profile y agregue el directorio bin de Kafka en su ruta.
+
+```
+cd ~
+nano .bash_profile
+```
+
+9- Dentro de .bash_profile escrirbimos la siguiente información:
+
+```
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/kafka_2.13-3.2.0/bin
+```
+
+10- Recargamos nuestra terminal con las nuevas rutas
+
+```
+source ~/.bash_profile
+```
+
+11- Repita lo mismo en las cuatro máquinas virtuales. ¡Excelente! Sus máquinas virtuales están listas para iniciar la configuración real.
+
+
