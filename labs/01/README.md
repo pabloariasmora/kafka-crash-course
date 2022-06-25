@@ -69,4 +69,15 @@ source ~/.bash_profile
 
 11- Repita lo mismo en las cuatro máquinas virtuales. ¡Excelente! Sus máquinas virtuales están listas para iniciar la configuración real.
 
+Configuración de Zookeeper
+========
+
+Apache Kafka necesita un de Zookeeper. En un entorno de producción, se debe configurar un clúster de zookeeper conocido como Zookeeper Ensemble. Sin embargo, para las actividades de desarrollo, puede configurar una única instancia de Zookeeper. 
+
+Para esta etapa la del curso se planea mantener a Zookeeper en un nodo separado (de momento).Entonces, seleccione una de las cuatro maquinas como su zookeeper. 
+
+No necesitamos descargar Zookeeper por separado. La descarga de Kafka también incluye una copia de Zookeeper. Lo primero es revisar el archivo de configuración de Zookeeper. 
+
+1- Abramos el archivo zookeeper.properties.
+
 
