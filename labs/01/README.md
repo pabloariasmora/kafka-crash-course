@@ -34,3 +34,16 @@ sudo apt install wget -y
 ```
 
 5- Repita todos los pasos en todas las maquinas (4).
+
+6- Ahora edescargar los binarios de Apache Kafka. Utilizando el comando wget.
+
+```
+wget http://redrockdigimark.com/apachemirror/kafka/2.0.0/kafka_2.12-2.0.0.tgz
+
+```
+
+7-  Descomprimamos los binarios. Puedes usar el comando tar.
+
+```
+tar -xzf kafka_2.13-3.2.0.tgz
+```
