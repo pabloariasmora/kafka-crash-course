@@ -115,16 +115,58 @@ zookeeper-server-start.sh /var/lib/zookeeper/zookeeper.properties
 
 Para comodidad, colocar el comando de inicio de zookeeper en el archivo rc.local y habilitar systemctl para garantizar que zookeeper se inicie automáticamente cada vez que inicie la máquina virtual. 
 
-8- Abra su archivo `/etc/rc.d/rc.local` y coloque el siguiente comando de inicio en la parte inferior del archivo. Asegúrese de especificar la ruta completa.
+8- Usando root, creamos el archivo de servicios.
 
 ```
-vi /etc/rc.d/rc.local
+  sudo vi /etc/systemd/system/zoo.service
 ```
 
+9- Copiamos dentro del archivo gerrit.service la siguiente información:
+
 ```
-/home/ubuntu/kafka_2.13-3.2.0/bin/zookeeper-server-start.sh /var/lib/zookeeper/zookeeper.properties> /dev/null 2>&1 & 
+[Unit]
+Description=Zookeeper Daemon
+Wants=syslog.target
+
+[Service]
+Type=forking
+WorkingDirectory=/var/lib/zookeeper
+User=ubuntu 
+ExecStart=/home/ubuntu/kafka_2.13-3.2.0/bin/zookeeper-server-start.sh /var/lib/zookeeper/zookeeper.properties
+TimeoutSec=infinity
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=zookeeper
+PIDFile=/var/lib/zookeeper/logs/zookeeper.pid
+
+[Install]
+WantedBy=multi-user.target
 ```
 
+6- Recargamos las definiciones dentro de systemctl
+
+
+```
+sudo systemctl daemon-reload
+```
+
+7- Habilitamos que corrar luego de reiniciar
+
+```
+sudo systemctl enable zoo
+```
+
+8- Iniciamos el servicio
+
+```
+sudo service zoo start
+```
+
+9- Verificamos que el estado del servicio sea `Active`
+
+```
+service zoo status
+```
 
 
 
