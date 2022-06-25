@@ -74,9 +74,9 @@ Configuración de Zookeeper
 
 Apache Kafka necesita un de Zookeeper. En un entorno de producción, se debe configurar un clúster de zookeeper conocido como Zookeeper Ensemble. Sin embargo, para las actividades de desarrollo, puede configurar una única instancia de Zookeeper. 
 
-Para esta etapa la del curso se planea mantener a Zookeeper en un nodo separado (de momento).Entonces, seleccione una de las cuatro maquinas como su zookeeper. 
+Para un ambiente de desarrollo inicialmente no necesitamos descargar Zookeeper por separado. La descarga de Kafka también incluye una copia de Zookeeper. Las siguientes instrucciones muestran la configuración de Zookeeper para entornos de desarrollo.
 
-No necesitamos descargar Zookeeper por separado. La descarga de Kafka también incluye una copia de Zookeeper. Lo primero es revisar el archivo de configuración de Zookeeper. 
+Lo primero es revisar el archivo de configuración de Zookeeper. 
 
 1- Revisemos el contenido del archivo zookeeper.properties.
 
@@ -90,9 +90,9 @@ cat $HOME/kafka_2.13-3.2.0/config/zookeeper.properties
 sudo mkdir -p /var/lib/zookeeper
 ```
 
-3- Otorgamos los permisos de acceso a nuestro usuario en mi caso a ubuntu, pero deben verificar el usuario asignado a sus maquinas.
+3- Otorgamos los permisos de acceso a todos los usurios (por facilidad de la practica).
 ```
-sudo chown ubuntu:ubuntu /var/lib/zookeeper
+sudo chmod 777 /var/lib/zookeeper
 ```
 
 4- Copiamos la configuración por defecto a nuestra nueva carpeta.
@@ -113,7 +113,94 @@ zookeeper-server-start.sh /var/lib/zookeeper/zookeeper.properties
 
 7- ¡Excelente! El servidor zookeeper se está ejecutando. Presione `CTRL+C` para terminar el proceso. Ahora estamos seguros de que las configuraciones son buenas y el servidor se inicia sin problemas. 
 
-Para comodidad, colocar el comando de inicio de zookeeper en el archivo rc.local y habilitar systemctl para garantizar que zookeeper se inicie automáticamente cada vez que inicie la máquina virtual. 
+Algunas preguntas interesantes es de como podemos garantizar que en un reinicio el servicio se mantenga en ejecución. Como incorporamos el comando de inicio a systemctl, o si basta con agregar `&` a nuestro comando de ejecución.
+
+
+Configurando Zookeepr para un ambiente de producion base.
+==========
+
+Como pudimos observar existen algunas limitantes de la configuración de desarollo, ya que los scripts base proporcionados carecen de indendencia de ejecución. Vamos a proceder con la instalación de la version StandAlone de Zookeeper.
+
+8- Ahora edescargar los binarios de Apache Zookeeper. Utilizando el comando wget.
+
+```
+wget https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz
+
+```
+
+7-  Descomprimamos los binarios. Puedes usar el comando tar.
+
+```
+tar -xzf apache-zookeeper-3.8.0-bin.tar.gz 
+```
+
+8-  Renombramos nuestra carpeta para facilidad de referencia
+
+```
+mv apache-zookeeper-3.8.0-bin zookeeper
+```
+
+8- Abra el .bash_profile y agregue el directorio bin de Kafka en su ruta.
+
+```
+cd ~
+nano .bash_profile
+```
+
+9- Dentro de .bash_profile escrirbimos la siguiente información:
+
+```
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/kafka_2.13-3.2.0/bin:$HOME/apache-zookeeper-3.8.0-bin
+```
+
+10- Recordemos nuestra carpeta `/var/lib/zookeeper` y la configuración previa
+
+```
+ls -la /var/lib/zookeeper
+cat /var/lib/zookeeper/zookeeper.properties
+```
+
+11- Comparemos la configuración previa con el siguiente archivo:
+
+```
+cat ~/apache-zookeeper-3.8.0-bin/conf/zoo_sample.cfg
+```
+
+12- Renombremos nuestra nueva configuración 
+```
+cp ~/apache-zookeeper-3.8.0-bin/conf/zoo_sample.cfg ~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg
+```
+
+13- Iniciamos propiamente Zookeeper
+
+```
+zkServer.sh start
+```
+
+14- Ahora puede validar que ZooKeeper se está ejecutando correctamente en modo independiente conectándose al puerto del cliente y enviando el comando de cuatro letras srvr. Esto devolverá información básica de ZooKeeper desde el servidor en ejecución:
+
+```
+telnet localhost 2181
+...
+...
+...
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+srvr
+Zookeeper version: 3.6.3--6401e4ad2087061bc6b9f80dec2d69f2e3c8660a, built on 04/08/2021 16:35 GMT
+Latency min/avg/max: 0/0.0/0
+Received: 4
+Sent: 3
+Connections: 1
+Outstanding: 0
+Zxid: 0x6
+Mode: standalone
+Node count: 5
+Connection closed by foreign host.
+```
+
+Para comodidad, habilitar systemctl para garantizar que zookeeper se inicie automáticamente cada vez que inicie la máquina virtual. 
 
 8- Usando root, creamos el archivo de servicios.
 
@@ -132,19 +219,19 @@ Wants=syslog.target
 Type=forking
 WorkingDirectory=/var/lib/zookeeper
 User=ubuntu 
-ExecStart=/home/ubuntu/kafka_2.13-3.2.0/bin/zookeeper-server-start.sh /var/lib/zookeeper/zookeeper.properties
-TimeoutSec=infinity
+ExecStart=/home/zookeeper_home/bin/zkServer.sh
+TimeoutSec=30
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=zookeeper
 PIDFile=/var/lib/zookeeper/logs/zookeeper.pid
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
 ```
 
 6- Recargamos las definiciones dentro de systemctl
-
 
 ```
 sudo systemctl daemon-reload
@@ -168,6 +255,18 @@ sudo service zoo start
 service zoo status
 ```
 
+10- Ejecutamos un par de commandos para validar que nuestra configuración fue exitosa
+```
+zkCli.sh version
+```
+
+11- Revisamos los nodos disponibles
+
+```
+zkCli.sh -server localhost:2181 ls /brokers/ids
+```
+
+Es esperado que a este punto no tengamos ningun nodo, por tanto recibiremos un mensaje de `Node does not exist`
 
 
 
