@@ -8,7 +8,7 @@ Este contenido explica cómo instalar una instancia básica de Kafka en una máq
 Requerimientos
 ======
 
-* Un servidor con el sistema operativo Ubuntu, 22.04 LTS, Jammy Jellyfish previamente instalado.
+* Cuatro servidor con el sistema operativo Ubuntu, 22.04 LTS, Jammy Jellyfish previamente instalado.
 * Asegurar conectividad de los puertos 22, 80, 8080 , 9092 (kafka), 2181 (zookeeper), 2888(zookeeper), 3888 (zookeeper).
 
 Pasos por seguir
@@ -26,3 +26,11 @@ sudo apt-get update && sudo apt-get upgrade -y
 ```
 sudo apt install openjdk-11-jdk -y
 ```
+
+4- Necesitaremos la herramienta wget para descargar cualquier cosa en las máquinas virtuales. Entonces, instalaremos wget. Ejecute el siguiente comando:
+
+```
+sudo apt install wget -y
+```
+
+5- Repita todos los pasos en todas las maquinas (4).
