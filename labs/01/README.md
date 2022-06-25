@@ -105,6 +105,27 @@ cp $HOME/kafka_2.13-3.2.0/config/zookeeper.properties /var/lib/zookeeper/zookeep
 dataDir=/var/lib/zookeeper
 ```
 
+6- ¡Excelente! Estamos listos para iniciar el servidor Zookeeper. Iniciar Zookeeper es sencillo. Todo lo que necesita hacer es ejecutar zookeeper-server-start.sh y proporcionar zookeeper.properties como argumento.
+
+```
+zookeeper-server-start.sh /var/lib/zookeeper/zookeeper.properties
+```
+
+7- ¡Excelente! El servidor zookeeper se está ejecutando. Presione `CTRL+C` para terminar el proceso. Ahora estamos seguros de que las configuraciones son buenas y el servidor se inicia sin problemas. 
+
+Para comodidad, colocar el comando de inicio de zookeeper en el archivo rc.local y habilitar systemctl para garantizar que zookeeper se inicie automáticamente cada vez que inicie la máquina virtual. 
+
+8- Abra su archivo `/etc/rc.d/rc.local` y coloque el siguiente comando de inicio en la parte inferior del archivo. Asegúrese de especificar la ruta completa.
+
+```
+vi /etc/rc.d/rc.local
+```
+
+```
+/home/ubuntu/kafka_2.13-3.2.0/bin/zookeeper-server-start.sh /var/lib/zookeeper/zookeeper.properties> /dev/null 2>&1 & 
+```
+
+
 
 
 
