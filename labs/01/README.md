@@ -15,6 +15,7 @@ Pasos por seguir
 ======
 
 1- Iniciar sesión dentro del servidor. Para esto abra una ventana de terminal.
+
 2- Actualizar los repositorios de Paquetes dentro de Ubuntu.
 
 ```
