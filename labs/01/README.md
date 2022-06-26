@@ -116,8 +116,9 @@ zookeeper-server-start.sh /var/lib/zookeeper/zookeeper.properties
 
 Algunas preguntas interesantes es de como podemos garantizar que en un reinicio el servicio se mantenga en ejecución. Como incorporamos el comando de inicio a systemctl, o si basta con agregar `&` a nuestro comando de ejecución.
 
+Recordemos que la finalidad del Zookeeper que contiene Kafka es para fines de desarrollo.
 
-Configurando Zookeepr para un ambiente de producion base.
+Configurando Zookeeper para un ambiente de producion base (StandAlone).
 ==========
 
 Como pudimos observar existen algunas limitantes de la configuración de desarollo, ya que los scripts base proporcionados carecen de indendencia de ejecución. Vamos a proceder con la instalación de la version StandAlone de Zookeeper.
@@ -267,7 +268,11 @@ zkCli.sh version
 zkCli.sh -server localhost:2181 ls /brokers/ids
 ```
 
-Es esperado que a este punto no tengamos ningun nodo, por tanto recibiremos un mensaje de `Node does not exist`
+Es esperado que a este punto no tengamos ningun nodo, por tanto recibiremos un mensaje de `Node does not exist`. Ya que no hemos configurado Kafka.
+
+
+
+
 
 Configuración de un broker de Kafka sobre el mismo nodo que Zookeeper
 ========
