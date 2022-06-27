@@ -308,13 +308,23 @@ Node count: 5
 Connection closed by foreign host.
 ```
 
-24- Detenemos el servicio
+24- Ejecutamos el siguiente comando en los sevidores para ver en que Mode (follower|leader) se encuentran
+
+```
+zkServer.sh status
+```
+
+El resultado del servidor debe seguir
+
+
+
+25- Detenemos el servicio
 
 ```
 sudo service zoo stop
 ```
 
-25- Ahora puede validar que ZooKeeper no se está ejecutando
+26- Ahora puede validar que ZooKeeper no se está ejecutando
 
 ```
 telnet localhost 2181
@@ -429,6 +439,9 @@ Mode: leader
 ```
 
 Esperamos unos minutos y volvemos a ejecutar el paso 7. El resultado deberia ser diferente en caso de haber un cambio de lider.
+
+
+
 
 
 
