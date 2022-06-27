@@ -317,12 +317,19 @@ sudo service zoo stop
 12- Ahora puede validar que ZooKeeper no se está ejecutando
 
 ```
-telnet localhost 218
+telnet localhost 2181
 ...
 ...
 Trying 127.0.0.1...
 telnet: Unable to connect to remote host: Connection refused
 ```
+
+
+
+
+
+
+
 
 13- Ejecutamos un par de commandos para validar que nuestra configuración fue exitosa
 ```
