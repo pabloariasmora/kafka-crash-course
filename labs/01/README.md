@@ -449,3 +449,64 @@ Mode: leader
 ```
 
 Esperamos unos minutos y volvemos a ejecutar el paso 7. El resultado deberia ser diferente en caso de haber un cambio de lider.
+
+Configurando ZooNavigator (UI) usando Docker
+=====
+
+1- Antes de instalar Docker Engine por primera vez en una nueva máquina host, debe configurar el repositorio de Docker. Luego, puede instalar y actualizar Docker desde el repositorio. En la cuarta máquina.
+
+```
+ sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release -y
+```
+
+2- Agregue la clave GPG oficial de Docker:
+
+```
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+
+3- Use el siguiente comando para configurar el repositorio:
+
+```
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+4- Instale Docker Engine: actualice el índice del paquete apt e instale la última versión de Docker Engine, containerd y Docker Compose.
+
+```
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+5- Inicie el contenedor para ZooNavigator
+
+```
+sudo docker run \
+  -d \
+  -p 9000:9000 \
+  -e HTTP_PORT=9000 \
+  --name zoonavigator \
+  --restart unless-stopped \
+  elkozmon/zoonavigator:latest
+```
+
+6- Vaya a http://localhost:9000. o reemplaze localhost por la IP de la maquina virtual utilizada.
+
+7- En la pagina de inicio de ZooNavigator utilice una de las IPs sus Followers o Leader y el puerto 2181 como Connection String
+
+Ej: `172.31.1.97:2181`
+
+8- Click `Connect`
+
+9- En el panel de la izquierda, seleccionamos el valor `Zookeeper`
+
+10- Seleccionamos el valor `Config`
+
+11- Veremos listados todos nuestros nodos como participantes.
