@@ -123,26 +123,20 @@ Configurando Zookeeper para un ambiente de producion base (StandAlone).
 
 Como pudimos observar existen algunas limitantes de la configuración de desarollo, ya que los scripts base proporcionados carecen de indendencia de ejecución. Vamos a proceder con la instalación de la version StandAlone de Zookeeper.
 
-8- Ahora edescargar los binarios de Apache Zookeeper. Utilizando el comando wget.
+1- Ahora edescargar los binarios de Apache Zookeeper. Utilizando el comando wget.
 
 ```
 wget https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz
 
 ```
 
-7-  Descomprimamos los binarios. Puedes usar el comando tar.
+2-  Descomprimamos los binarios. Puedes usar el comando tar.
 
 ```
 tar -xzf apache-zookeeper-3.8.0-bin.tar.gz 
 ```
 
-8-  Renombramos nuestra carpeta para facilidad de referencia
-
-```
-mv apache-zookeeper-3.8.0-bin zookeeper
-```
-
-8- Abra el .bash_profile y agregue el directorio bin de Kafka en su ruta.
+3- Abra el .bash_profile y agregue el directorio bin de Kafka en su ruta.
 
 ```
 cd ~
