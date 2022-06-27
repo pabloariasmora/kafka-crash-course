@@ -213,6 +213,22 @@ Node count: 5
 Connection closed by foreign host.
 ```
 
+15- Iniciamos propiamente Zookeeper
+
+```
+zkServer.sh stop
+```
+
+16- Ahora puede validar que ZooKeeper no se está ejecutando
+
+```
+telnet localhost 218
+...
+...
+Trying 127.0.0.1...
+telnet: Unable to connect to remote host: Connection refused
+```
+
 Para comodidad, habilitar systemctl para garantizar que zookeeper se inicie automáticamente cada vez que inicie la máquina virtual. 
 
 8- Usando root, creamos el archivo de servicios.
@@ -269,12 +285,51 @@ sudo service zoo start
 service zoo status
 ```
 
-10- Ejecutamos un par de commandos para validar que nuestra configuración fue exitosa
+10- Ahora puede validar que ZooKeeper se está ejecutando correctamente en modo independiente conectándose al puerto del cliente y enviando el comando de cuatro letras srvr. Esto devolverá información básica de ZooKeeper desde el servidor en ejecución:
+
+```
+telnet localhost 2181
+...
+...
+...
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+srvr
+Zookeeper version: 3.6.3--6401e4ad2087061bc6b9f80dec2d69f2e3c8660a, built on 04/08/2021 16:35 GMT
+Latency min/avg/max: 0/0.0/0
+Received: 4
+Sent: 3
+Connections: 1
+Outstanding: 0
+Zxid: 0x6
+Mode: standalone
+Node count: 5
+Connection closed by foreign host.
+```
+
+11- Detenemos el servicio
+
+```
+sudo service zoo stop
+```
+
+12- Ahora puede validar que ZooKeeper no se está ejecutando
+
+```
+telnet localhost 218
+...
+...
+Trying 127.0.0.1...
+telnet: Unable to connect to remote host: Connection refused
+```
+
+13- Ejecutamos un par de commandos para validar que nuestra configuración fue exitosa
 ```
 zkCli.sh version
 ```
 
-11- Revisamos los nodos disponibles
+14- Revisamos los nodos disponibles
 
 ```
 zkCli.sh -server localhost:2181 ls /brokers/ids
