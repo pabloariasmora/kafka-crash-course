@@ -327,7 +327,32 @@ telnet: Unable to connect to remote host: Connection refused
 Configurando Zookeeper para un ambiente de producion base (Ensemble).
 ==========
 
+1- Ejecute los pasos de instalacion StandAlone del 1 al 24 en 2 servidores más.
 
+2- Obtenga la IP Address de los 3 servidores
+
+```
+ip addr show
+```
+Para el ejemplo asumamos las siguientes:
+
+- *Server1:* 172.31.1.97 (IP1)
+- *Server2:* 172.31.3.236 (IP2)
+- *Server3:* 172.31.5.250 (IP3)
+
+3- En todos los archivos `~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg`, agregamos una linea por servidor siguiendo el formato:
+
+```
+server.1=IP1:2888:3888
+```
+
+Ejemplos:
+
+```
+server.1=172.31.1.97:2888:3888
+server.2=172.31.3.236:2888:3888
+server.3=172.31.5.250:2888:3888
+```
 
 
 
