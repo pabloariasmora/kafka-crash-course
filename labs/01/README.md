@@ -1,9 +1,9 @@
-Guia rápida para instalar Gerrit en Linux (Canonical, Ubuntu, 22.04 LTS, Jammy Jellyfish) 
+Guia rápida para instalar Zookeeper en Linux (Canonical, Ubuntu, 22.04 LTS, Jammy Jellyfish) 
 =
 
 Introducción
 ======
-Este contenido explica cómo instalar una instancia básica de Kafka en una máquina Linux.
+Este contenido explica cómo instalar una instancia básica de Zookeeper en una máquina Linux.
 
 Requerimientos
 ======
