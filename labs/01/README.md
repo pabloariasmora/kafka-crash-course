@@ -343,7 +343,7 @@ Para el ejemplo asumamos las siguientes:
 3- En todos los archivos `~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg`, agregamos una linea por servidor siguiendo el formato:
 
 ```
-server.1=IP1:2888:3888
+server.X=IP1:2888:3888
 ```
 
 Ejemplos:
@@ -353,6 +353,83 @@ server.1=172.31.1.97:2888:3888
 server.2=172.31.3.236:2888:3888
 server.3=172.31.5.250:2888:3888
 ```
+
+4- Siguiendo el mismo orden de las X y las IP creamos los archivos `myid`. Uno por servidor.
+
+```
+echo 1 > /var/lib/zookeeper/myid
+```
+
+```
+echo 2 > /var/lib/zookeeper/myid
+```
+
+```
+echo 2 > /var/lib/zookeeper/myid
+```
+
+5- Iniciamos el servicio
+
+```
+sudo service zoo start
+```
+
+6- Ahora puede validar que ZooKeeper se está ejecutando correctamente en modo independiente conectándose al puerto del cliente y enviando el comando de cuatro letras srvr. Esto devolverá información básica de ZooKeeper desde el servidor en ejecución:
+
+```
+telnet localhost 2181
+...
+...
+...
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+srvr
+Zookeeper version: 3.6.3--6401e4ad2087061bc6b9f80dec2d69f2e3c8660a, built on 04/08/2021 16:35 GMT
+Latency min/avg/max: 0/0.0/0
+Received: 4
+Sent: 3
+Connections: 1
+Outstanding: 0
+Zxid: 0x6
+Mode: standalone
+Node count: 5
+Connection closed by foreign host.
+```
+
+En caso de error podemos utilizar los logs dentro de `~/apache-zookeeper-3.8.0-bin/logs`
+
+7- Ejecutamos el siguiente comando en los sevidores para ver en que Mode (follower|leader) se encuentran
+
+```
+zkServer.sh status
+```
+
+El resultado de dos de los servidores debe seguir
+
+```
+zkServer.sh status
+...
+/usr/bin/java
+ZooKeeper JMX enabled by default
+Using config: /home/ubuntu/apache-zookeeper-3.8.0-bin/bin/../conf/zoo.cfg
+Client port found: 2181. Client address: localhost. Client SSL: false.
+Mode: follower
+```
+
+El resultado de uno de los servidores debe seguir
+
+```
+zkServer.sh status
+/usr/bin/java
+ZooKeeper JMX enabled by default
+Using config: /home/ubuntu/apache-zookeeper-3.8.0-bin/bin/../conf/zoo.cfg
+Client port found: 2181. Client address: localhost. Client SSL: false.
+Mode: leader
+```
+
+Esperamos unos minutos y volvemos a ejecutar el paso 7. El resultado deberia ser diferente en caso de haber un cambio de lider.
+
 
 
 
