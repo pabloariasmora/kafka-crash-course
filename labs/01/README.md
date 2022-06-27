@@ -316,7 +316,16 @@ zkServer.sh status
 
 El resultado del servidor debe seguir
 
-
+```
+zkServer.sh status
+...
+...
+/usr/bin/java
+ZooKeeper JMX enabled by default
+Using config: /home/ubuntu/apache-zookeeper-3.8.0-bin/bin/../conf/zoo.cfg
+Client port found: 2181. Client address: localhost. Client SSL: false.
+Mode: standalone
+```
 
 25- Detenemos el servicio
 
