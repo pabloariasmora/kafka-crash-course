@@ -231,13 +231,13 @@ telnet: Unable to connect to remote host: Connection refused
 
 Para comodidad, habilitar systemctl para garantizar que zookeeper se inicie automáticamente cada vez que inicie la máquina virtual. 
 
-8- Usando root, creamos el archivo de servicios.
+17- Usando root, creamos el archivo de servicios.
 
 ```
   sudo vi /etc/systemd/system/zoo.service
 ```
 
-9- Copiamos dentro del archivo gerrit.service la siguiente información:
+18- Copiamos dentro del archivo gerrit.service la siguiente información:
 
 ```
 [Unit]
@@ -261,31 +261,31 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-6- Recargamos las definiciones dentro de systemctl
+19- Recargamos las definiciones dentro de systemctl
 
 ```
 sudo systemctl daemon-reload
 ```
 
-7- Habilitamos que corrar luego de reiniciar
+20- Habilitamos que corrar luego de reiniciar
 
 ```
 sudo systemctl enable zoo
 ```
 
-8- Iniciamos el servicio
+21- Iniciamos el servicio
 
 ```
 sudo service zoo start
 ```
 
-9- Verificamos que el estado del servicio sea `Active`
+22- Verificamos que el estado del servicio sea `Active`
 
 ```
 service zoo status
 ```
 
-10- Ahora puede validar que ZooKeeper se está ejecutando correctamente en modo independiente conectándose al puerto del cliente y enviando el comando de cuatro letras srvr. Esto devolverá información básica de ZooKeeper desde el servidor en ejecución:
+23- Ahora puede validar que ZooKeeper se está ejecutando correctamente en modo independiente conectándose al puerto del cliente y enviando el comando de cuatro letras srvr. Esto devolverá información básica de ZooKeeper desde el servidor en ejecución:
 
 ```
 telnet localhost 2181
@@ -308,13 +308,13 @@ Node count: 5
 Connection closed by foreign host.
 ```
 
-11- Detenemos el servicio
+24- Detenemos el servicio
 
 ```
 sudo service zoo stop
 ```
 
-12- Ahora puede validar que ZooKeeper no se está ejecutando
+25- Ahora puede validar que ZooKeeper no se está ejecutando
 
 ```
 telnet localhost 2181
@@ -324,8 +324,8 @@ Trying 127.0.0.1...
 telnet: Unable to connect to remote host: Connection refused
 ```
 
-
-
+Configurando Zookeeper para un ambiente de producion base (Ensemble).
+==========
 
 
 
