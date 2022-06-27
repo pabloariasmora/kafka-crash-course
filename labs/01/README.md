@@ -8,7 +8,7 @@ Este contenido explica cómo instalar una instancia básica de Zookeeper en una 
 Requerimientos
 ======
 
-* Cuatro servidor con el sistema operativo Ubuntu, 22.04 LTS, Jammy Jellyfish previamente instalado.
+* Tres servidores con el sistema operativo Ubuntu, 22.04 LTS, Jammy Jellyfish previamente instalado.
 * Asegurar conectividad de los puertos 22, 80, 8080 , 9092 (kafka), 2181 (zookeeper), 2888(zookeeper), 3888 (zookeeper).
 
 Pasos por seguir
