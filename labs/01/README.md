@@ -139,33 +139,40 @@ tar -xzf apache-zookeeper-3.8.0-bin.tar.gz
 3- Abra el .bash_profile y agregue el directorio bin de Kafka en su ruta.
 
 ```
-cd ~
-nano .bash_profile
+nano ~/.bash_profile
 ```
 
-9- Dentro de .bash_profile escrirbimos la siguiente información:
+4- Dentro de .bash_profile escrirbimos la siguiente información:
 
 ```
 PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/kafka_2.13-3.2.0/bin:$HOME/apache-zookeeper-3.8.0-bin
 ```
 
-10- Recordemos nuestra carpeta `/var/lib/zookeeper` y la configuración previa
+5- Recargamos nuestra terminal con las nuevas rutas
+
+```
+source ~/.bash_profile
+```
+
+6- Recordemos nuestra carpeta `/var/lib/zookeeper` y la configuración previa
 
 ```
 ls -la /var/lib/zookeeper
 cat /var/lib/zookeeper/zookeeper.properties
 ```
 
-11- Comparemos la configuración previa con el siguiente archivo:
+7- Comparemos la configuración previa con el siguiente archivo:
 
 ```
 cat ~/apache-zookeeper-3.8.0-bin/conf/zoo_sample.cfg
 ```
 
-12- Renombremos nuestra nueva configuración 
+8- Renombremos nuestra nueva configuración 
 ```
 cp ~/apache-zookeeper-3.8.0-bin/conf/zoo_sample.cfg ~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg
 ```
+
+
 
 13- Iniciamos propiamente Zookeeper
 
