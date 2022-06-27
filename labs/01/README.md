@@ -145,7 +145,7 @@ nano ~/.bash_profile
 4- Dentro de .bash_profile escrirbimos la siguiente información:
 
 ```
-PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/kafka_2.13-3.2.0/bin:$HOME/apache-zookeeper-3.8.0-bin
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/kafka_2.13-3.2.0/bin:$HOME/apache-zookeeper-3.8.0-bin/bin
 ```
 
 5- Recargamos nuestra terminal con las nuevas rutas
@@ -232,7 +232,8 @@ Wants=syslog.target
 Type=forking
 WorkingDirectory=/var/lib/zookeeper
 User=ubuntu 
-ExecStart=/home/zookeeper_home/bin/zkServer.sh
+ExecStart=/home/ubuntu/apache-zookeeper-3.8.0-bin/bin/zkServer.sh start
+ExecStop=/home/ubuntu/apache-zookeeper-3.8.0-bin/bin/zkServer.sh stop
 TimeoutSec=30
 StandardOutput=syslog
 StandardError=syslog
