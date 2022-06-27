@@ -172,7 +172,17 @@ cat ~/apache-zookeeper-3.8.0-bin/conf/zoo_sample.cfg
 cp ~/apache-zookeeper-3.8.0-bin/conf/zoo_sample.cfg ~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg
 ```
 
+9- Borremos los contenidos dentro de `/var/lib/zookeeper`, por facilidad del laboratorio. Para eliminar rastros de la version de Zookeeper incluida por Kafka.
 
+``` 
+rm -r /var/lib/zookeeper/*
+```
+
+5- Cambiamos dentro del archivo `~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg`, la direccion de `dataDir=/tmp/zookeeper` por `dataDir=/var/lib/zookeeper`
+
+```
+nano ~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg
+```
 
 13- Iniciamos propiamente Zookeeper
 
