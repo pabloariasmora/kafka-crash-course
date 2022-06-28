@@ -1,74 +1,74 @@
-Guia rápida para instalar Zookeeper en Linux (Canonical, Ubuntu, 22.04 LTS, Jammy Jellyfish) 
+Quick guide to install Zookeeper on Linux (Canonical, Ubuntu, 22.04 LTS, Jammy Jellyfish) 
 =
 
-Introducción
+Introduction
 ======
-Este contenido explica cómo instalar una instancia básica de Zookeeper en una máquina Linux.
+This content explains how to install a basic instance of Zookeeper on a Linux machine.
 
-Requerimientos
-======
-
-* Tres servidores con el sistema operativo Ubuntu, 22.04 LTS, Jammy Jellyfish previamente instalado.
-* Asegurar conectividad de los puertos 22, 80, 8080 , 9092 (kafka), 2181 (zookeeper), 2888(zookeeper), 3888 (zookeeper).
-
-Pasos por seguir
+Requirements
 ======
 
-1- Iniciar sesión dentro del servidor. Para esto abra una ventana de terminal.
+* Three servers with Ubuntu operating system, 22.04 LTS, Jammy Jellyfish previously installed.
+* Ensure connectivity of ports 22, 80, 8080, 9092 (kafka), 2181 (zookeeper), 2888 (zookeeper), 3888 (zookeeper), 9000 (ZooNavigator)
 
-2- Actualizar los repositorios de Paquetes dentro de Ubuntu.
+Steps to follow
+======
+
+1- Log in to the server. For this open a terminal.
+
+2- Update the Package repositories within Ubuntu.
 
 ```
 sudo apt-get update && sudo apt-get upgrade -y
 ```
 
-3- Instalar Java JDK Environment (versión 11 o superior). 
+3- Install Java JDK Environment (version 11).
 
 ```
 sudo apt install openjdk-11-jdk -y
 ```
 
-4- Necesitaremos la herramienta wget para descargar cualquier cosa en las máquinas virtuales. Entonces, instalaremos wget. Ejecute el siguiente comando:
+4- We will need the wget tool to download anything to the virtual machines. So, we will install wget. Run the following command:
 
 ```
 sudo apt install wget -y
 ```
 
-5- Repita todos los pasos en todas las maquinas (4).
+5- Repeat all steps on all machines.
 
-6- Ahora edescargar los binarios de Apache Kafka. Utilizando el comando wget.
+6- Now download the Apache Kafka binaries. Using the wget command.
 
 ```
 wget https://dlcdn.apache.org/kafka/3.2.0/kafka_2.13-3.2.0.tgz
 
 ```
 
-7-  Descomprimamos los binarios. Puedes usar el comando tar.
+7- Let's uncompress the binaries. You can use the tar command.
 
 ```
 tar -xzf kafka_2.13-3.2.0.tgz
 ```
 
-8- Abra el .bash_profile y agregue el directorio bin de Kafka en su ruta.
+8- Open the `.bash_profile` and add the Kafka bin directory to your path.
 
 ```
 cd ~
 nano .bash_profile
 ```
 
-9- Dentro de .bash_profile escrirbimos la siguiente información:
+9- Inside `.bash_profile`,  write the following information:
 
 ```
 PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/kafka_2.13-3.2.0/bin
 ```
 
-10- Recargamos nuestra terminal con las nuevas rutas
+10- Reload your terminal with the new routes
 
 ```
 source ~/.bash_profile
 ```
 
-11- Repita lo mismo en las tres máquinas virtuales. ¡Excelente! Sus máquinas virtuales están listas para iniciar la configuración real.
+11- Repeat the same on all three virtual machines. Excellent! Your virtual machines are ready to start the real setup.
 
 
 Configuración de Zookeeper (Development)
