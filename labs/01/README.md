@@ -71,127 +71,130 @@ source ~/.bash_profile
 11- Repeat the same on all three virtual machines. Excellent! Your virtual machines are ready to start the real setup.
 
 
-Configuración de Zookeeper (Development)
+Zookeeper Configuration (Development)
 ========
 
-Apache Kafka necesita un de Zookeeper. En un entorno de producción, se debe configurar un clúster de zookeeper conocido como Zookeeper Ensemble. Sin embargo, para las actividades de desarrollo, puede configurar una única instancia de Zookeeper. 
+Apache Kafka needs a Zookeeper. In a production environment, a zookeeper cluster known as the Zookeeper Ensemble must be set up. However, for development activities, you can configure a single instance of Zookeeper.
 
-Para un ambiente de desarrollo inicialmente no necesitamos descargar Zookeeper por separado. La descarga de Kafka también incluye una copia de Zookeeper. Las siguientes instrucciones muestran la configuración de Zookeeper para entornos de desarrollo.
+For a development environment initially we do not need to download Zookeeper separately. The Kafka download also includes a copy of Zookeeper. The following instructions show how to configure Zookeeper for development environments.
 
-Lo primero es revisar el archivo de configuración de Zookeeper. 
+The first thing is to review the Zookeeper configuration file. 
 
-1- Revisemos el contenido del archivo zookeeper.properties.
+1- Let's review the content of the zookeeper.properties file.
 
 ```
 cat $HOME/kafka_2.13-3.2.0/config/zookeeper.properties 
 ```
 
-2- Creamos una carpeta para almacenar la configuración de nuestro Zookeeper
+2- Create a folder to store the configuration of our Zookeeper
 
 ```
 sudo mkdir -p /var/lib/zookeeper
 ```
 
-3- Otorgamos los permisos de acceso a todos los usurios (por facilidad de la practica).
+3- Grant access permissions to all users (for ease of practice).
 ```
 sudo chmod 777 /var/lib/zookeeper
 ```
 
-4- Copiamos la configuración por defecto a nuestra nueva carpeta.
+4- Copy the default configuration to our new folder.
 ```
 cp $HOME/kafka_2.13-3.2.0/config/zookeeper.properties /var/lib/zookeeper/zookeeper.properties
 ```
 
-5- Cambiamos dentro del archivo /var/lib/zookeeper/zookeeper.properties, la direccion de dataDir=/tmp/zookeeper por
+5- Inside the file `/var/lib/zookeeper/zookeeper.properties` change the address of `dataDir=/tmp/zookeeper` by
 ```
 dataDir=/var/lib/zookeeper
 ```
 
-6- ¡Excelente! Estamos listos para iniciar el servidor Zookeeper. Iniciar Zookeeper es sencillo. Todo lo que necesita hacer es ejecutar zookeeper-server-start.sh y proporcionar zookeeper.properties como argumento.
+6- Excellent! We are ready to start the Zookeeper server. Starting Zookeeper is easy. All you need to do is run zookeeper-server-start.sh and supply zookeeper.properties as an argument.
 
 ```
 zookeeper-server-start.sh /var/lib/zookeeper/zookeeper.properties
 ```
 
-7- ¡Excelente! El servidor zookeeper se está ejecutando. Presione `CTRL+C` para terminar el proceso. Ahora estamos seguros de que las configuraciones son buenas y el servidor se inicia sin problemas. 
+7- Excellent! The zookeeper server is running. Press `CTRL+C` to finish the process. Now we are sure that the configurations are good and the server starts without problems.
 
-Algunas preguntas interesantes es de como podemos garantizar que en un reinicio el servicio se mantenga en ejecución. Como incorporamos el comando de inicio a systemctl, o si basta con agregar `&` a nuestro comando de ejecución.
+Some interesting questions area: 
+- How we can guarantee that the service stays running on a restart. 
+- How do we add the start command to systemctl, or if we just add it `&` to our run command.
 
-Recordemos que la finalidad del Zookeeper que contiene Kafka es para fines de desarrollo.
+Remember that the purpose of the Zookeeper contained in Kafka is for development purposes.
 
-Configurando Zookeeper para un ambiente de producion base (StandAlone).
+Configuring Zookeeper for a base production environment (StandAlone).
 ==========
 
-Como pudimos observar existen algunas limitantes de la configuración de desarollo, ya que los scripts base proporcionados carecen de indendencia de ejecución. Vamos a proceder con la instalación de la version StandAlone de Zookeeper.
+As we could see, there are some limitations of the development configuration, since the provided base scripts lack execution independence. We are going to proceed with the installation of the StandAlone version of Zookeeper.
 
-1- Ahora edescargar los binarios de Apache Zookeeper. Utilizando el comando wget.
+1- Download the Apache Zookeeper binaries. Using the wget command.
 
 ```
 wget https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz
 
 ```
 
-2-  Descomprimamos los binarios. Puedes usar el comando tar.
+2- Let's decompress the binaries. You can use the tar command.
 
 ```
 tar -xzf apache-zookeeper-3.8.0-bin.tar.gz 
 ```
 
-3- Abra el .bash_profile y agregue el directorio bin de Kafka en su ruta.
+3- Open `.bash_profile` and add the Kafka bin directory to your path.
 
 ```
 nano ~/.bash_profile
 ```
 
-4- Dentro de .bash_profile escrirbimos la siguiente información:
+4- Inside `.bash_profile` write the following information:
 
 ```
 PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/kafka_2.13-3.2.0/bin:$HOME/apache-zookeeper-3.8.0-bin/bin
 ```
 
-5- Recargamos nuestra terminal con las nuevas rutas
+5- Reload terminal with the new routes
 
 ```
 source ~/.bash_profile
 ```
 
-6- Recordemos nuestra carpeta `/var/lib/zookeeper` y la configuración previa
+6- Let's remember our folder `/var/lib/zookeeperand`, check the previous configuration
 
 ```
 ls -la /var/lib/zookeeper
 cat /var/lib/zookeeper/zookeeper.properties
 ```
 
-7- Comparemos la configuración previa con el siguiente archivo:
+7- Let's compare the previous configuration with the following file:
 
 ```
 cat ~/apache-zookeeper-3.8.0-bin/conf/zoo_sample.cfg
 ```
 
-8- Renombremos nuestra nueva configuración 
+8- Let's rename our new configuration
+
 ```
 cp ~/apache-zookeeper-3.8.0-bin/conf/zoo_sample.cfg ~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg
 ```
 
-9- Borremos los contenidos dentro de `/var/lib/zookeeper`, por facilidad del laboratorio. Para eliminar rastros de la version de Zookeeper incluida por Kafka.
+9- Let's delete the contents inside `/var/lib/zookeeper`, for the ease of the laboratory. To remove traces of the version of Zookeeper included by Kafka.
 
 ``` 
 rm -r /var/lib/zookeeper/*
 ```
 
-5- Cambiamos dentro del archivo `~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg`, la direccion de `dataDir=/tmp/zookeeper` por `dataDir=/var/lib/zookeeper`
+5- Change within the file `~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg`, the address of `dataDir=/tmp/zookeeper` by `dataDir=/var/lib/zookeeper`
 
 ```
 nano ~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg
 ```
 
-13- Iniciamos propiamente Zookeeper
+13- Start Zookeeper properly
 
 ```
 zkServer.sh start
 ```
 
-14- Ahora puede validar que ZooKeeper se está ejecutando correctamente en modo independiente conectándose al puerto del cliente y enviando el comando de cuatro letras srvr. Esto devolverá información básica de ZooKeeper desde el servidor en ejecución:
+14- You can now validate that ZooKeeper is running correctly in standalone mode by connecting to the client port and sending the four letter srvr command. This will return basic ZooKeeper information from the running server:
 
 ```
 telnet localhost 2181
@@ -214,13 +217,13 @@ Node count: 5
 Connection closed by foreign host.
 ```
 
-15- Iniciamos propiamente Zookeeper
+15- Stop Zookeeper
 
 ```
 zkServer.sh stop
 ```
 
-16- Ahora puede validar que ZooKeeper no se está ejecutando
+16- Validate that ZooKeeper is not running
 
 ```
 telnet localhost 2181
@@ -230,15 +233,15 @@ Trying 127.0.0.1...
 telnet: Unable to connect to remote host: Connection refused
 ```
 
-Para comodidad, habilitar systemctl para garantizar que zookeeper se inicie automáticamente cada vez que inicie la máquina virtual. 
+For convenience, enable systemctl to ensure that zookeeper starts automatically every time you start the virtual machine.
 
-17- Usando root, creamos el archivo de servicios.
+17- Using root, create the services file.
 
 ```
   sudo vi /etc/systemd/system/zoo.service
 ```
 
-18- Copiamos dentro del archivo gerrit.service la siguiente información:
+18- Copy the following information into the zoo.service file:
 
 ```
 [Unit]
@@ -262,31 +265,31 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-19- Recargamos las definiciones dentro de systemctl
+19- Reload the definitions inside systemctl
 
 ```
 sudo systemctl daemon-reload
 ```
 
-20- Habilitamos que corrar luego de reiniciar
+20- Enable running the service after restart
 
 ```
 sudo systemctl enable zoo
 ```
 
-21- Iniciamos el servicio
+21- Start the service
 
 ```
 sudo service zoo start
 ```
 
-22- Verificamos que el estado del servicio sea `Active`
+22- Verify that the status of the service is `Active`
 
 ```
 service zoo status
 ```
 
-23- Ahora puede validar que ZooKeeper se está ejecutando correctamente en modo independiente conectándose al puerto del cliente y enviando el comando de cuatro letras srvr. Esto devolverá información básica de ZooKeeper desde el servidor en ejecución:
+23- You can now validate that ZooKeeper is running correctly in standalone mode by connecting to the client port and sending the four letter srvr command. This will return basic ZooKeeper information from the running server:
 
 ```
 telnet localhost 2181
@@ -309,13 +312,13 @@ Node count: 5
 Connection closed by foreign host.
 ```
 
-24- Ejecutamos el siguiente comando en los sevidores para ver en que Mode (follower|leader) se encuentran
+24- Execute the following command in the servers to see in which Mode (follower|leader) they are
 
 ```
 zkServer.sh status
 ```
 
-El resultado del servidor debe seguir
+The output from the server should follow
 
 ```
 zkServer.sh status
@@ -328,13 +331,13 @@ Client port found: 2181. Client address: localhost. Client SSL: false.
 Mode: standalone
 ```
 
-25- Detenemos el servicio
+25- Stop the service
 
 ```
 sudo service zoo stop
 ```
 
-26- Ahora puede validar que ZooKeeper no se está ejecutando
+26- Now you can validate that ZooKeeper is not running
 
 ```
 telnet localhost 2181
@@ -344,29 +347,30 @@ Trying 127.0.0.1...
 telnet: Unable to connect to remote host: Connection refused
 ```
 
-Configurando Zookeeper para un ambiente de producion base (Ensemble).
+Configuring Zookeeper for a base production environment (Ensemble).
 ==========
 
-1- Ejecute los pasos de instalacion StandAlone del 1 al 24 en 2 servidores más.
+1- Execute the StandAlone installation steps from 1 to 24 on 2 more servers.
 
-2- Obtenga la IP Address de los 3 servidores
+2- Get the IP Address of the 3 servers
 
 ```
 ip addr show
 ```
-Para el ejemplo asumamos las siguientes:
+
+For the example, let's assume the following:
 
 - *Server1:* 172.31.1.97 (IP1)
 - *Server2:* 172.31.3.236 (IP2)
 - *Server3:* 172.31.5.250 (IP3)
 
-3- En todos los archivos `~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg`, agregamos una linea por servidor siguiendo el formato:
+3- In all the files `~/apache-zookeeper-3.8.0-bin/conf/zoo.cfg`,  add a line per server following the format:
 
 ```
 server.X=IP1:2888:3888
 ```
 
-Ejemplos:
+Example:
 
 ```
 server.1=172.31.1.97:2888:3888
@@ -374,7 +378,7 @@ server.2=172.31.3.236:2888:3888
 server.3=172.31.5.250:2888:3888
 ```
 
-4- Siguiendo el mismo orden de las X y las IP creamos los archivos `myid`. Uno por servidor.
+4- Following the same order of the `X` and the `IP` we create the files `myid`. One per server.
 
 ```
 echo 1 > /var/lib/zookeeper/myid
@@ -388,13 +392,13 @@ echo 2 > /var/lib/zookeeper/myid
 echo 2 > /var/lib/zookeeper/myid
 ```
 
-5- Iniciamos el servicio
+5- Start the service
 
 ```
 sudo service zoo start
 ```
 
-6- Ahora puede validar que ZooKeeper se está ejecutando correctamente en modo independiente conectándose al puerto del cliente y enviando el comando de cuatro letras srvr. Esto devolverá información básica de ZooKeeper desde el servidor en ejecución:
+6- You can now validate that ZooKeeper is running correctly in standalone mode by connecting to the client port and sending the four letter srvr command. This will return basic ZooKeeper information from the running server:
 
 ```
 telnet localhost 2181
@@ -417,15 +421,15 @@ Node count: 5
 Connection closed by foreign host.
 ```
 
-En caso de error podemos utilizar los logs dentro de `~/apache-zookeeper-3.8.0-bin/logs`
+In case of error we can check the logs inside `~/apache-zookeeper-3.8.0-bin/logs`
 
-7- Ejecutamos el siguiente comando en los sevidores para ver en que Mode (follower|leader) se encuentran
+7- Execute the following command in the servers to see in which Mode (follower|leader) they are
 
 ```
 zkServer.sh status
 ```
 
-El resultado de dos de los servidores debe seguir
+The output from two of the servers should follow
 
 ```
 zkServer.sh status
@@ -437,7 +441,7 @@ Client port found: 2181. Client address: localhost. Client SSL: false.
 Mode: follower
 ```
 
-El resultado de uno de los servidores debe seguir
+The output from one of the servers should follow
 
 ```
 zkServer.sh status
@@ -448,12 +452,11 @@ Client port found: 2181. Client address: localhost. Client SSL: false.
 Mode: leader
 ```
 
-Esperamos unos minutos y volvemos a ejecutar el paso 7. El resultado deberia ser diferente en caso de haber un cambio de lider.
 
 Configurando ZooNavigator (UI) usando Docker
 =====
 
-1- Antes de instalar Docker Engine por primera vez en una nueva máquina host, debe configurar el repositorio de Docker. Luego, puede instalar y actualizar Docker desde el repositorio. En la cuarta máquina.
+1- Before installing Docker Engine for the first time on a new host machine, you need to configure the Docker repository. Then you can install and update Docker from the repository. On the fourth machine.
 
 ```
  sudo apt-get install \
@@ -463,14 +466,14 @@ Configurando ZooNavigator (UI) usando Docker
     lsb-release -y
 ```
 
-2- Agregue la clave GPG oficial de Docker:
+2- Add the official Docker GPG key:
 
 ```
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
 
-3- Use el siguiente comando para configurar el repositorio:
+3- Use the following command to configure the repository:
 
 ```
 echo \
@@ -478,14 +481,14 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-4- Instale Docker Engine: actualice el índice del paquete apt e instale la última versión de Docker Engine, containerd y Docker Compose.
+4- Install Docker Engine. Update the apt package index and install the latest version of Docker Engine, containerd and Docker Compose.
 
 ```
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
-5- Inicie el contenedor para ZooNavigator
+5- Start the container for ZooNavigator
 
 ```
 sudo docker run \
@@ -497,16 +500,16 @@ sudo docker run \
   elkozmon/zoonavigator:latest
 ```
 
-6- Vaya a http://localhost:9000. o reemplaze localhost por la IP de la maquina virtual utilizada.
+6- Go to http://localhost:9000 or replace localhost with the IP of the virtual machine used.
 
-7- En la pagina de inicio de ZooNavigator utilice una de las IPs sus Followers o Leader y el puerto 2181 como Connection String
+7- On ZooNavigator home page use one of your Followers or Leader IPs and port 2181 as Connection String
 
-Ej: `172.31.1.97:2181`
+Ex: `172.31.1.97:2181`
 
 8- Click `Connect`
 
-9- En el panel de la izquierda, seleccionamos el valor `Zookeeper`
+9- In the left panel, select the value `Zookeeper`
 
-10- Seleccionamos el valor `Config`
+10- Select the value `Config`
 
-11- Veremos listados todos nuestros nodos como participantes.
+11- Check all our nodes listed as participants.
