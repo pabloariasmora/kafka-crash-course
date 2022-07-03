@@ -43,17 +43,64 @@ The message `Node does not exist` is expected. Since at this moment we have not 
 mkdir /tmp/kafka-logs
 ```
 
-3- Let's review defaulf `Kafka` configuration 
+6- Let's review defaulf `Kafka` configuration 
 
 ```
 cat ~/kafka_2.13-3.2.0/config/server.properties
 ```
 
-2- Ejecutamos Kafka
+7- Start Kafka as foreground process
 
 ```
 kafka-server-start.sh  ~/kafka_2.13-3.2.0/config/server.properties
 ```
+
+8- On a different server review current kafka nodes attached
+
+```
+zkCli.sh -server localhost:2181 ls /brokers/ids
+```
+You should see an output similar to 
+
+```
+[0]
+Exiting JVM with code 0
+```
+
+9- Now repeat steps 1-5 on a different server
+
+10- On the new server you need to update the `broker.id` property
+
+`nano ~/kafka_2.13-3.2.0/config/server.properties`
+
+Should be something similar to this output
+
+```
+############################# Server Basics #############################
+
+# The id of the broker. This must be set to a unique integer for each broker.
+broker.id=1
+```
+
+11- Start Kafka as foreground process
+
+```
+kafka-server-start.sh  ~/kafka_2.13-3.2.0/config/server.properties
+```
+
+8- On a different server review current kafka nodes attached
+
+```
+zkCli.sh -server localhost:2181 ls /brokers/ids
+```
+You should see an output similar to 
+
+```
+[0,1]
+Exiting JVM with code 0
+```
+
+
 
 7- ¡Excelente! El broker kafka se está ejecutando. Presione `CTRL+C` para terminar el proceso. Ahora estamos seguros de que las configuraciones son buenas y el servidor se inicia sin problemas. 
 
