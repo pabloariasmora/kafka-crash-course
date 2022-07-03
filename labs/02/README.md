@@ -172,4 +172,16 @@ version=0
 cluster.id=T9VpTJzqSviD27qE0bff4w
 ```
 
+22- Go to the Kafka admin server http://localhost:9000 or replace localhost with the IP of the virtual machine used.
 
+23- On ZooNavigator home page use one of your Followers or Leader IPs and port 2181 as Connection String
+
+```
+Ex: 172.31.1.97:2181
+```
+
+24- Click Connect
+
+25- In the left panel, select the value Zookeeper
+
+26- Select the value `brokers`-> `ids`. Review the properties used for configuration. Also you can review other settings set from Kafka.
