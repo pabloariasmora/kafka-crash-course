@@ -143,7 +143,11 @@ WantedBy=multi-user.target
 
 `service kafka status`
 
-20- On the other two servers perform from 14-19. Just remember to update the 
+20- On the other two servers perform from 14-19. Just remember to update the `broker.id` property on the third server.
+
+
+
+
 
 7- ¡Excelente! El broker kafka se está ejecutando. Presione `CTRL+C` para terminar el proceso. Ahora estamos seguros de que las configuraciones son buenas y el servidor se inicia sin problemas. 
 
