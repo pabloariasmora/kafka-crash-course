@@ -1,33 +1,49 @@
+Quick guide to install Kafka on Linux (Canonical, Ubuntu, 22.04 LTS, Jammy Jellyfish)
+=
 
+Introduction
+======
+This content explains how to install a basic instance of Kafka on a Linux machine.
 
+Requirements
+======
 
-13- Ejecutamos un par de commandos para validar que nuestra configuración fue exitosa
+* Three servers with Ubuntu operating system, 22.04 LTS, Jammy Jellyfish previously installed.
+* Ensure connectivity of ports 22, 80, 8080, 9092 (kafka), 2181 (zookeeper), 2888 (zookeeper), 3888 (zookeeper), 9000 (ZooNavigator)
+* Ensure Lab completion 01
+
+Steps to follow
+======
+
+1- Log in to the server. For this open a terminal.
+
+2- Update the Package repositories within Ubuntu.
+
 ```
-zkCli.sh version
+sudo apt-get update && sudo apt-get upgrade -y
 ```
 
-14- Revisamos los nodos disponibles
+3- Lets validate Zookeeper Status
+
+```
+zkCli.sh status
+```
+
+4- We have a way to review current kafka nodes attached
 
 ```
 zkCli.sh -server localhost:2181 ls /brokers/ids
 ```
 
-Es esperado que a este punto no tengamos ningun nodo, por tanto recibiremos un mensaje de `Node does not exist`. Ya que no hemos configurado Kafka.
+The message `Node does not exist` is expected. Since at this moment we have not configured any `Kafka Broker`.
 
-
-
-
-
-Configuración de un broker de Kafka sobre el mismo nodo que Zookeeper
-========
-
-1 - Creamos una carpeta para que Kafka pueda escribir sus logs
+5- We need a `logs` folder for Kafka called `/tmp/kafka-logs`
 
 ```
 mkdir /tmp/kafka-logs
 ```
 
-3- Revisamos las configuraciones bases de Kafka
+3- Let's review defaulf `Kafka` configuration 
 
 ```
 cat ~/kafka_2.13-3.2.0/config/server.properties
