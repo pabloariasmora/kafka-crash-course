@@ -127,6 +127,23 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
+16- Reload the definitions inside systemctl
+
+`sudo systemctl daemon-reload`
+
+17- Enable running the service after restart
+
+`sudo systemctl enable kafka`
+
+18- Start the service
+
+`sudo service kafka start`
+
+19- Verify that the status of the service is Active
+
+`service kafka status`
+
+
 
 7- ¡Excelente! El broker kafka se está ejecutando. Presione `CTRL+C` para terminar el proceso. Ahora estamos seguros de que las configuraciones son buenas y el servidor se inicia sin problemas. 
 
