@@ -55,10 +55,10 @@ cat ~/kafka_2.13-3.2.0/config/server.properties
 kafka-server-start.sh  ~/kafka_2.13-3.2.0/config/server.properties
 ```
 
-8- On a different server review current kafka nodes attached
+8- On a different server review current kafka nodes attached to Zookeeper
 
 ```
-zkCli.sh -server localhost:2181 ls /brokers/ids
+zkCli.sh -server localhost:2181 ls /brokers/ids | tail -2
 ```
 You should see an output similar to 
 
@@ -88,10 +88,10 @@ broker.id=1
 kafka-server-start.sh  ~/kafka_2.13-3.2.0/config/server.properties
 ```
 
-12- On a different server review current kafka nodes attached
+12- On a different server review current kafka nodes attached to Zookeeper
 
 ```
-zkCli.sh -server localhost:2181 ls /brokers/ids
+zkCli.sh -server localhost:2181 ls /brokers/ids | tail -2
 ```
 You should see an output similar to 
 
@@ -145,25 +145,31 @@ WantedBy=multi-user.target
 
 20- On the other two servers perform from 14-19. Just remember to update the `broker.id` property on the third server.
 
-
-
-
-
-7- ¡Excelente! El broker kafka se está ejecutando. Presione `CTRL+C` para terminar el proceso. Ahora estamos seguros de que las configuraciones son buenas y el servidor se inicia sin problemas. 
-
-8- Ejecutamos Kafka en segundo plano
+21- On one of the servers review current kafka nodes attached to Zookeeper
 
 ```
-kafka-server-start.sh -daemon ~/kafka_2.13-3.2.0/config/server.properties
+zkCli.sh -server localhost:2181 ls /brokers/ids | tail -2
+```
+You should see an output similar to 
+
+```
+[0,1,2]
+Exiting JVM with code 0
 ```
 
-11- Revisamos los nodos disponibles usando Zookeeper.
+If you see a different output check the `/tmp/kafka-logs/meta.properties` on each server
 
 ```
-zkCli.sh -server localhost:2181 ls /brokers/ids
+cat /tmp/kafka-logs/meta.properties
 ```
+You should see something similar to
 
-Esta vez deberiamos tener una salida similar a `[0]` ya que solo tenemos un broker asignado.
-
+```
+#
+#Sun Jul 03 04:25:47 UTC 2022
+broker.id=0
+version=0
+cluster.id=T9VpTJzqSviD27qE0bff4w
+```
 
 
