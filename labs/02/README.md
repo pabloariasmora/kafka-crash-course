@@ -88,7 +88,7 @@ broker.id=1
 kafka-server-start.sh  ~/kafka_2.13-3.2.0/config/server.properties
 ```
 
-8- On a different server review current kafka nodes attached
+12- On a different server review current kafka nodes attached
 
 ```
 zkCli.sh -server localhost:2181 ls /brokers/ids
@@ -100,6 +100,32 @@ You should see an output similar to
 Exiting JVM with code 0
 ```
 
+For convenience, enable systemctl to ensure that kafka starts automatically every time you start the virtual machines.
+
+13- Stop the `Kafka` on the all servers. Press `CTRL+C` to finish the process. Now we are sure that the configurations are good and the server starts without problems.
+
+14- Using root, create the services file.
+
+`sudo vi /etc/systemd/system/kafka.service`
+
+15- Copy the following information into the `kafka.service` file:
+
+```
+[Unit]
+Description=Kafka Daemon
+After=network-online.target 
+Requires=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu 
+ExecStart=/home/ubuntu/kafka_2.13-3.2.0/bin/kafka-server-start.sh /home/ubuntu/kafka_2.13-3.2.0/config/server.properties
+ExecStop=/home/ubuntu/kafka_2.13-3.2.0/bin/kafka-server-stop.sh /home/ubuntu/kafka_2.13-3.2.0/config/server.properties
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
 
 
 7- ¡Excelente! El broker kafka se está ejecutando. Presione `CTRL+C` para terminar el proceso. Ahora estamos seguros de que las configuraciones son buenas y el servidor se inicia sin problemas. 
