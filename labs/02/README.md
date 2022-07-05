@@ -391,3 +391,37 @@ users.registrations
 kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic users.registrations
 kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic users.verifications
 ```
+
+CMAK (Cluster Manager for Apache Kafka) - used to be know as Kafka Manager
+======
+
+1. Ensure to have docker running
+
+2. Grab all the IPs and PORTS for the Zookeepers
+
+```
+Ex: 
+172.31.21.170:2181
+172.31.27.129:2181
+172.31.26.124:2181
+```
+
+3. Start the container for CMAK
+
+```
+sudo docker run -d -p 9000:9000 -e ZK_HOSTS="172.31.21.170:2181,172.31.27.129:2181,172.31.26.124:2181" hlebalbau/kafka-manager:stable
+```
+
+4. Go to `http://localhost:9000` or replace localhost with the IP of the virtual machine used.
+
+5. On CMAK, Click on the `Cluster tab` -> `Add Cluster`
+
+6. Select a name for the cluster. And once again write IPs for the Zookeepers as part of the Cluster Zookeeper Hosts.
+
+7. Despite not been able to select our current Kafka version, lets select the latest one available.
+
+8. Leave everything else as default and click on Save
+
+9. On the `Topic` tab, select List.
+
+10. Validate the topics presents, a topic is marked red if it is marked for deletion in Zookeeper.
