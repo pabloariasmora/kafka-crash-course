@@ -200,6 +200,8 @@ Here with a replication factor of three for each partition, 50 partitions are cr
 
 And regarding the boostrap-server is the url of one of the Kafka brokers which you give to fetch the initial metadata about your Kafka cluster.
 
+2. Verify the recent configuration of the topic
+
 ```
 kafka-topics.sh --describe --topic demo-topic --bootstrap-server localhost:9092
 ```
@@ -207,55 +209,61 @@ kafka-topics.sh --describe --topic demo-topic --bootstrap-server localhost:9092
 Your output should be similar to:
 
 ```
-Topic: demoTopicId: b69sefAaSv2vWd9_7VzdiQPartitionCount: 50ReplicationFactor: 3Configs: segment.bytes=1073741824
-Topic: demoPartition: 0Leader: 0Replicas: 2,0,1Isr: 0
-Topic: demoPartition: 1Leader: 0Replicas: 1,2,0Isr: 0
-Topic: demoPartition: 2Leader: 0Replicas: 0,1,2Isr: 0
-Topic: demoPartition: 3Leader: 0Replicas: 2,1,0Isr: 0
-Topic: demoPartition: 4Leader: 0Replicas: 1,0,2Isr: 0
-Topic: demoPartition: 5Leader: 0Replicas: 0,2,1Isr: 0
-Topic: demoPartition: 6Leader: 0Replicas: 2,0,1Isr: 0
-Topic: demoPartition: 7Leader: 0Replicas: 1,2,0Isr: 0
-Topic: demoPartition: 8Leader: 0Replicas: 0,1,2Isr: 0
-Topic: demoPartition: 9Leader: 0Replicas: 2,1,0Isr: 0
-Topic: demoPartition: 10Leader: 0Replicas: 1,0,2Isr: 0
-Topic: demoPartition: 11Leader: 0Replicas: 0,2,1Isr: 0
-Topic: demoPartition: 12Leader: 0Replicas: 2,0,1Isr: 0
-Topic: demoPartition: 13Leader: 0Replicas: 1,2,0Isr: 0
-Topic: demoPartition: 14Leader: 0Replicas: 0,1,2Isr: 0
-Topic: demoPartition: 15Leader: 0Replicas: 2,1,0Isr: 0
-Topic: demoPartition: 16Leader: 0Replicas: 1,0,2Isr: 0
-Topic: demoPartition: 17Leader: 0Replicas: 0,2,1Isr: 0
-Topic: demoPartition: 18Leader: 0Replicas: 2,0,1Isr: 0
-Topic: demoPartition: 19Leader: 0Replicas: 1,2,0Isr: 0
-Topic: demoPartition: 20Leader: 0Replicas: 0,1,2Isr: 0
-Topic: demoPartition: 21Leader: 0Replicas: 2,1,0Isr: 0
-Topic: demoPartition: 22Leader: 0Replicas: 1,0,2Isr: 0
-Topic: demoPartition: 23Leader: 0Replicas: 0,2,1Isr: 0
-Topic: demoPartition: 24Leader: 0Replicas: 2,0,1Isr: 0
-Topic: demoPartition: 25Leader: 0Replicas: 1,2,0Isr: 0
-Topic: demoPartition: 26Leader: 0Replicas: 0,1,2Isr: 0
-Topic: demoPartition: 27Leader: 0Replicas: 2,1,0Isr: 0
-Topic: demoPartition: 28Leader: 0Replicas: 1,0,2Isr: 0
-Topic: demoPartition: 29Leader: 0Replicas: 0,2,1Isr: 0
-Topic: demoPartition: 30Leader: 0Replicas: 2,0,1Isr: 0
-Topic: demoPartition: 31Leader: 0Replicas: 1,2,0Isr: 0
-Topic: demoPartition: 32Leader: 0Replicas: 0,1,2Isr: 0
-Topic: demoPartition: 33Leader: 0Replicas: 2,1,0Isr: 0
-Topic: demoPartition: 34Leader: 0Replicas: 1,0,2Isr: 0
-Topic: demoPartition: 35Leader: 0Replicas: 0,2,1Isr: 0
-Topic: demoPartition: 36Leader: 0Replicas: 2,0,1Isr: 0
-Topic: demoPartition: 37Leader: 0Replicas: 1,2,0Isr: 0
-Topic: demoPartition: 38Leader: 0Replicas: 0,1,2Isr: 0
-Topic: demoPartition: 39Leader: 0Replicas: 2,1,0Isr: 0
-Topic: demoPartition: 40Leader: 0Replicas: 1,0,2Isr: 0
-Topic: demoPartition: 41Leader: 0Replicas: 0,2,1Isr: 0
-Topic: demoPartition: 42Leader: 0Replicas: 2,0,1Isr: 0
-Topic: demoPartition: 43Leader: 0Replicas: 1,2,0Isr: 0
-Topic: demoPartition: 44Leader: 0Replicas: 0,1,2Isr: 0
-Topic: demoPartition: 45Leader: 0Replicas: 2,1,0Isr: 0
-Topic: demoPartition: 46Leader: 0Replicas: 1,0,2Isr: 0
-Topic: demoPartition: 47Leader: 0Replicas: 0,2,1Isr: 0
-Topic: demoPartition: 48Leader: 0Replicas: 2,0,1Isr: 0
-Topic: demoPartition: 49Leader: 0Replicas: 1,2,0Isr: 0
+Topic: demo-topic
+TopicId: b69sefAaSv2vWd9_7VzdiQ
+PartitionCount: 50
+ReplicationFactor: 3
+Configs: segment.bytes=1073741824
+Topic: demoPartition: 0  Leader: 0 Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 1  Leader: 2 Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 2  Leader: 0 Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 3  Leader: 0 Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 4  Leader: 0 Replicas: 1,0,2Isr: 0
+Topic: demoPartition: 5  Leader: 0 Replicas: 0,2,1Isr: 0
+Topic: demoPartition: 6  Leader: 0 Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 7  Leader: 0 Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 8  Leader: 0 Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 9  Leader: 0 Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 10 Leader: 0 Replicas: 1,0,2 Isr: 0
+Topic: demoPartition: 11 Leader: 0 Replicas: 0,2,1 Isr: 0
+Topic: demoPartition: 12 Leader: 0 Replicas: 2,0,1 Isr: 0
+Topic: demoPartition: 13 Leader: 0 Replicas: 1,2,0 Isr: 0
+Topic: demoPartition: 14 Leader: 0 Replicas: 0,1,2 Isr: 0
+Topic: demoPartition: 15 Leader: 0 Replicas: 2,1,0 Isr: 0
+Topic: demoPartition: 16 Leader: 0 Replicas: 1,0,2 Isr: 0
+Topic: demoPartition: 17 Leader: 0 Replicas: 0,2,1 Isr: 0
+Topic: demoPartition: 18 Leader: 0 Replicas: 2,0,1 Isr: 0
+Topic: demoPartition: 19 Leader: 0 Replicas: 1,2,0 Isr: 0
+Topic: demoPartition: 20 Leader: 0 Replicas: 0,1,2 Isr: 0
+Topic: demoPartition: 21 Leader: 0 Replicas: 2,1,0 Isr: 0
+Topic: demoPartition: 22 Leader: 0 Replicas: 1,0,2 Isr: 0
+Topic: demoPartition: 23 Leader: 0 Replicas: 0,2,1 Isr: 0
+Topic: demoPartition: 24 Leader: 0 Replicas: 2,0,1 Isr: 0
+Topic: demoPartition: 25 Leader: 0 Replicas: 1,2,0 Isr: 0
+Topic: demoPartition: 26 Leader: 0 Replicas: 0,1,2 Isr: 0
+Topic: demoPartition: 27 Leader: 0 Replicas: 2,1,0 Isr: 0
+Topic: demoPartition: 28 Leader: 0 Replicas: 1,0,2 Isr: 0
+Topic: demoPartition: 29 Leader: 0 Replicas: 0,2,1 Isr: 0
+Topic: demoPartition: 30 Leader: 0 Replicas: 2,0,1 Isr: 0
+Topic: demoPartition: 31 Leader: 0 Replicas: 1,2,0 Isr: 0
+Topic: demoPartition: 32 Leader: 0 Replicas: 0,1,2 Isr: 0
+Topic: demoPartition: 33 Leader: 0 Replicas: 2,1,0 Isr: 0
+Topic: demoPartition: 34 Leader: 0 Replicas: 1,0,2 Isr: 0
+Topic: demoPartition: 35 Leader: 0 Replicas: 0,2,1 Isr: 0
+Topic: demoPartition: 36 Leader: 0 Replicas: 2,0,1 Isr: 0
+Topic: demoPartition: 37 Leader: 0 Replicas: 1,2,0 Isr: 0
+Topic: demoPartition: 38 Leader: 0 Replicas: 0,1,2 Isr: 0
+Topic: demoPartition: 39 Leader: 0 Replicas: 2,1,0 Isr: 0
+Topic: demoPartition: 40 Leader: 0 Replicas: 1,0,2 Isr: 0
+Topic: demoPartition: 41 Leader: 0 Replicas: 0,2,1 Isr: 0
+Topic: demoPartition: 42 Leader: 0 Replicas: 2,0,1 Isr: 0
+Topic: demoPartition: 43 Leader: 0 Replicas: 1,2,0 Isr: 0
+Topic: demoPartition: 44 Leader: 0 Replicas: 0,1,2 Isr: 0
+Topic: demoPartition: 45 Leader: 0 Replicas: 2,1,0 Isr: 0
+Topic: demoPartition: 46 Leader: 0 Replicas: 1,0,2 Isr: 0
+Topic: demoPartition: 47 Leader: 0 Replicas: 0,2,1 Isr: 0
+Topic: demoPartition: 48 Leader: 0 Replicas: 2,0,1 Isr: 0
+Topic: demoPartition: 49 Leader: 0 Replicas: 1,2,0 Isr: 0
 ```
+
+For Partition 0, Broker 0 is the leader and for partition 1, Broker 2 is the leader. The ISR is simply all the replicas of a partition that are "in-sync" with the leader. The definition of "in-sync" depends on the topic configuration, but by default, it means that a replica is or has been fully caught up with the leader in the last 10 seconds. The setting for this time period is: replica.lag.time.max.ms and has a server default which can be overridden on a per topic basis.
