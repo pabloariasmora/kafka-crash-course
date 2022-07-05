@@ -186,8 +186,7 @@ Ex: 172.31.1.97:2181
 
 26- Select the value `brokers`-> `ids`. Review the properties used for configuration. Also you can review other settings set from Kafka.
 
-
-Our first topic
+Topic Creation
 =====
 
 1. On one of the Kafka nodes run the following command
@@ -267,3 +266,78 @@ Topic: demoPartition: 49 Leader: 0 Replicas: 1,2,0 Isr: 0
 ```
 
 For Partition 0, Broker 0 is the leader and for partition 1, Broker 2 is the leader. The ISR is simply all the replicas of a partition that are "in-sync" with the leader. The definition of "in-sync" depends on the topic configuration, but by default, it means that a replica is or has been fully caught up with the leader in the last 10 seconds. The setting for this time period is: replica.lag.time.max.ms and has a server default which can be overridden on a per topic basis.
+
+Listing Topics
+=====
+
+1. Let's add a few more topics to the cluster:
+
+```
+kafka-topics.sh --create --topic users.registrations --replication-factor 1 --partitions 2  --bootstrap-server localhost:9092
+```
+
+Lets analyze our `WARNING` message
+```
+WARNING: Due to limitations in metric names, topics with a period ('.') or underscore ('_') could collide. To avoid issues it is best to use either, but not both.
+```
+
+Kafka enforces a set of “legal” characters that can constitute a topic name. Valid characters for Kafka topics are the ASCII Alphanumeric characters, ‘.’, ‘_’, and ‘-‘. So, anything that matches the following pattern can be a valid Kafka Topics name.
+
+```
+val legalChars = "[a-zA-Z0-9\\._\\-]"
+```
+
+However, one thing to keep in mind is that due to limitations in metric names, topics with a period (‘.’) or underscore (‘_’) could collide. To avoid issues it is best to use either, but not both.
+
+There is no control or way around what Kafka enforces. However, you can use this rule as a foundation to get creative and come up with more standard naming conventions.
+
+It is worth emphasizing that the topic names are case sensitive. So topicName is not the same as topicname or TopicName. Kafka would treat all three of them as individual topics.
+
+2. Lets create a third topic
+
+```
+kafka-topics.sh --create --topic users.verifications --replication-factor 1 --partitions 2  --bootstrap-server localhost:9092
+```
+
+3. list all the Kafka topics in a cluster
+
+```
+kafka-topics.sh --list --bootstrap-server localhost:9092
+```
+
+The output should look like
+
+```
+demo-topic
+users.registrations
+users.verifications
+```
+
+4. Describe both new topics `users.registrations` and `users.verifications`
+
+```
+kafka-topics.sh --describe --topic users.registrations --bootstrap-server localhost:9092
+```
+Output should be similar to
+
+```
+Topic: users.registrations TopicId: AOARGFMgQByDB17XM1Uh_g PartitionCount: 2 ReplicationFactor: 1  Configs: segment.bytes=1073741824
+Topic: users.registrations Partition: 0 Leader: 2 Replicas: 2 Isr: 2
+Topic: users.registrations Partition: 1 Leader: 1 Replicas: 1 Isr: 1
+```
+
+```
+kafka-topics.sh --describe --topic users.verfications --bootstrap-server localhost:9092
+```
+
+Output should be similar to
+
+```
+Topic: users.verfications TopicId: dSlbrCNWR6yTWk7DQb0HrA PartitionCount: 2 ReplicationFactor: 1 Configs: segment.bytes=1073741824
+Topic: users.verfications Partition: 0 Leader: 0 Replicas: 0 Isr: 0
+Topic: users.verfications Partition: 1 Leader: 2 Replicas: 2 Isr: 2
+```
+
+
+
+
