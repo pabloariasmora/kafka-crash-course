@@ -49,6 +49,32 @@ mkdir /tmp/kafka-logs
 cat ~/kafka_2.13-3.2.0/config/server.properties
 ```
 
+7- Stop all kafka brokers
+
+8- Grab all the IPs and PORTS for the Zookeepers
+
+```
+Ex: 
+172.31.21.170:2181
+172.31.27.129:2181
+172.31.26.124:2181
+```
+
+And `/kafka`
+
+9- Replace on the `server.properties` file on all boostrap servers.
+
+```
+############################# Zookeeper #############################
+
+# Zookeeper connection string (see zookeeper docs for details).
+# This is a comma separated host:port pairs, each corresponding to a zk
+# server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002".
+# You can also append an optional chroot string to the urls to specify the
+# root directory for all kafka znodes.
+zookeeper.connect=172.31.21.170:2181,172.31.27.129:2181,172.31.26.124:2181/kafka
+```
+
 7- Start Kafka as foreground process
 
 ```
@@ -58,7 +84,7 @@ kafka-server-start.sh  ~/kafka_2.13-3.2.0/config/server.properties
 8- On a different server review current kafka nodes attached to Zookeeper
 
 ```
-zkCli.sh -server localhost:2181 ls /brokers/ids | tail -2
+zkCli.sh -server localhost:2181 ls /kafka/brokers/ids | tail -2
 ```
 You should see an output similar to 
 
@@ -67,7 +93,7 @@ You should see an output similar to
 Exiting JVM with code 0
 ```
 
-9- Now repeat steps 1-5 on a different server
+9- Now repeat steps 1-7 on a different server
 
 10- On the new server you need to update the `broker.id` property
 
@@ -91,7 +117,7 @@ kafka-server-start.sh  ~/kafka_2.13-3.2.0/config/server.properties
 12- On a different server review current kafka nodes attached to Zookeeper
 
 ```
-zkCli.sh -server localhost:2181 ls /brokers/ids | tail -2
+zkCli.sh -server localhost:2181 ls /kafka/brokers/ids | tail -2
 ```
 You should see an output similar to 
 
@@ -148,7 +174,7 @@ WantedBy=multi-user.target
 21- On one of the servers review current kafka nodes attached to Zookeeper
 
 ```
-zkCli.sh -server localhost:2181 ls /brokers/ids | tail -2
+zkCli.sh -server localhost:2181 ls /kafka/brokers/ids | tail -2
 ```
 You should see an output similar to 
 
@@ -186,35 +212,11 @@ Ex: 172.31.1.97:2181
 
 26- Select the value `brokers`-> `ids`. Review the properties used for configuration. Also you can review other settings set from Kafka.
 
-Zookeper Connection String
-====
 
-1- Stop all kafka brokers
-
-2- Grab all the IPs and PORTS for the Zookeepers
-
-```
-Ex: 
-172.31.21.170:2181
-172.31.27.129:2181
-172.31.26.124:2181
-```
-3- Replace on the `server.properties` file on all boostrap servers.
-
-```
-############################# Zookeeper #############################
-
-# Zookeeper connection string (see zookeeper docs for details).
-# This is a comma separated host:port pairs, each corresponding to a zk
-# server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002".
-# You can also append an optional chroot string to the urls to specify the
-# root directory for all kafka znodes.
-zookeeper.connect=172.31.21.170:2181,172.31.27.129:2181,172.31.26.124:2181
-```
 4- On one of the servers review current kafka nodes attached to Zookeeper
 
 ```
-zkCli.sh -server localhost:2181 ls /brokers/ids | tail -2
+zkCli.sh -server localhost:2181 ls /kafka/brokers/ids | tail -2
 ```
 You should see an output similar to 
 
