@@ -32,7 +32,7 @@ zkCli.sh status
 4- We have a way to review current kafka nodes attached
 
 ```
-zkCli.sh -server localhost:2181 ls /brokers/ids
+zkCli.sh -server localhost:2181 ls /kafka/brokers/ids
 ```
 
 The message `Node does not exist` is expected. Since at this moment we have not configured any `Kafka Broker`.
@@ -211,20 +211,6 @@ Ex: 172.31.1.97:2181
 25- In the left panel, select the value Zookeeper
 
 26- Select the value `brokers`-> `ids`. Review the properties used for configuration. Also you can review other settings set from Kafka.
-
-
-4- On one of the servers review current kafka nodes attached to Zookeeper
-
-```
-zkCli.sh -server localhost:2181 ls /kafka/brokers/ids | tail -2
-```
-You should see an output similar to 
-
-```
-[0,1,2]
-Exiting JVM with code 0
-```
-51- Start all kafka brokers
 
 Topic Creation
 =====
