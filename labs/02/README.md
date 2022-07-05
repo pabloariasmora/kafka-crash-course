@@ -363,3 +363,31 @@ Topic: users.verificationsPartition: 2Leader: 2Replicas: 2Isr: 2
 Topic: users.verificationsPartition: 3Leader: 0Replicas: 0Isr: 0
 Topic: users.verificationsPartition: 4Leader: 1Replicas: 1Isr: 1
 ```
+
+Delete a Kafka Topic
+======
+
+1. Delete the topic `demo-topic` when my Kafka broker is running at `localhost:9092`
+
+```
+kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic demo-topic
+```
+
+2. You can verify the outcome of the command with a `kafka-topics.sh --list` command.
+
+```
+kafka-topics.sh --list --bootstrap-server localhost:9092
+```
+It make take some time (depending on the topic size) to see the effect of the command. But your output should look like:
+
+```
+users.verifications
+users.registrations
+```
+
+3. Delete the topic `users.verifications` and `users.registrations`.
+
+```
+kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic users.registrations
+kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic users.verifications
+```
