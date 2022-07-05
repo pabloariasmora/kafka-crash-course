@@ -327,17 +327,39 @@ Topic: users.registrations Partition: 1 Leader: 1 Replicas: 1 Isr: 1
 ```
 
 ```
-kafka-topics.sh --describe --topic users.verfications --bootstrap-server localhost:9092
+kafka-topics.sh --describe --topic users.verifications --bootstrap-server localhost:9092
 ```
 
 Output should be similar to
 
 ```
-Topic: users.verfications TopicId: dSlbrCNWR6yTWk7DQb0HrA PartitionCount: 2 ReplicationFactor: 1 Configs: segment.bytes=1073741824
-Topic: users.verfications Partition: 0 Leader: 0 Replicas: 0 Isr: 0
-Topic: users.verfications Partition: 1 Leader: 2 Replicas: 2 Isr: 2
+Topic: users.verifications TopicId: dSlbrCNWR6yTWk7DQb0HrA PartitionCount: 2 ReplicationFactor: 1 Configs: segment.bytes=1073741824
+Topic: users.verifications Partition: 0 Leader: 0 Replicas: 0 Isr: 0
+Topic: users.verifications Partition: 1 Leader: 2 Replicas: 2 Isr: 2
 ```
 
+Increase the number of partitions of a Kafka topic?
+=====
 
+1. Alter the Kafka topic `users.verifications` to have 5 partitions
 
+```
+kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic users.verifications --partitions 5
+```
 
+2. The command does not have any output, although you can verify afterwards with a `--describe` command.
+
+```
+kafka-topics.sh --describe --topic users.verfications --bootstrap-server localhost:9092
+```
+
+Check the update on the output
+
+```
+Topic: users.verifications TopicId: dSlbrCNWR6yTWk7DQb0HrA PartitionCount: 5 ReplicationFactor: 1 Configs: segment.bytes=1073741824
+Topic: users.verificationsPartition: 0Leader: 0Replicas: 0Isr: 0
+Topic: users.verificationsPartition: 1Leader: 2Replicas: 2Isr: 2
+Topic: users.verificationsPartition: 2Leader: 2Replicas: 2Isr: 2
+Topic: users.verificationsPartition: 3Leader: 0Replicas: 0Isr: 0
+Topic: users.verificationsPartition: 4Leader: 1Replicas: 1Isr: 1
+```
