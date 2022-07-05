@@ -185,3 +185,77 @@ Ex: 172.31.1.97:2181
 25- In the left panel, select the value Zookeeper
 
 26- Select the value `brokers`-> `ids`. Review the properties used for configuration. Also you can review other settings set from Kafka.
+
+
+Our first topic
+=====
+
+1. On one of the Kafka nodes run the following command
+
+```
+kafka-topics.sh --create --replication-factor 3 --partitions 50 --topic demo-topic --bootstrap-server localhost:9092
+```
+
+Here with a replication factor of three for each partition, 50 partitions are created. On defining a replication factor of three,  there will be one leader and two followers, for a partition. Also, at the time when message or record is sent to the leader, it is copied in followers.
+
+And regarding the boostrap-server is the url of one of the Kafka brokers which you give to fetch the initial metadata about your Kafka cluster.
+
+```
+kafka-topics.sh --describe --topic demo-topic --bootstrap-server localhost:9092
+```
+
+Your output should be similar to:
+
+```
+Topic: demoTopicId: b69sefAaSv2vWd9_7VzdiQPartitionCount: 50ReplicationFactor: 3Configs: segment.bytes=1073741824
+Topic: demoPartition: 0Leader: 0Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 1Leader: 0Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 2Leader: 0Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 3Leader: 0Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 4Leader: 0Replicas: 1,0,2Isr: 0
+Topic: demoPartition: 5Leader: 0Replicas: 0,2,1Isr: 0
+Topic: demoPartition: 6Leader: 0Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 7Leader: 0Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 8Leader: 0Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 9Leader: 0Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 10Leader: 0Replicas: 1,0,2Isr: 0
+Topic: demoPartition: 11Leader: 0Replicas: 0,2,1Isr: 0
+Topic: demoPartition: 12Leader: 0Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 13Leader: 0Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 14Leader: 0Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 15Leader: 0Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 16Leader: 0Replicas: 1,0,2Isr: 0
+Topic: demoPartition: 17Leader: 0Replicas: 0,2,1Isr: 0
+Topic: demoPartition: 18Leader: 0Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 19Leader: 0Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 20Leader: 0Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 21Leader: 0Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 22Leader: 0Replicas: 1,0,2Isr: 0
+Topic: demoPartition: 23Leader: 0Replicas: 0,2,1Isr: 0
+Topic: demoPartition: 24Leader: 0Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 25Leader: 0Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 26Leader: 0Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 27Leader: 0Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 28Leader: 0Replicas: 1,0,2Isr: 0
+Topic: demoPartition: 29Leader: 0Replicas: 0,2,1Isr: 0
+Topic: demoPartition: 30Leader: 0Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 31Leader: 0Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 32Leader: 0Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 33Leader: 0Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 34Leader: 0Replicas: 1,0,2Isr: 0
+Topic: demoPartition: 35Leader: 0Replicas: 0,2,1Isr: 0
+Topic: demoPartition: 36Leader: 0Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 37Leader: 0Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 38Leader: 0Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 39Leader: 0Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 40Leader: 0Replicas: 1,0,2Isr: 0
+Topic: demoPartition: 41Leader: 0Replicas: 0,2,1Isr: 0
+Topic: demoPartition: 42Leader: 0Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 43Leader: 0Replicas: 1,2,0Isr: 0
+Topic: demoPartition: 44Leader: 0Replicas: 0,1,2Isr: 0
+Topic: demoPartition: 45Leader: 0Replicas: 2,1,0Isr: 0
+Topic: demoPartition: 46Leader: 0Replicas: 1,0,2Isr: 0
+Topic: demoPartition: 47Leader: 0Replicas: 0,2,1Isr: 0
+Topic: demoPartition: 48Leader: 0Replicas: 2,0,1Isr: 0
+Topic: demoPartition: 49Leader: 0Replicas: 1,2,0Isr: 0
+```
