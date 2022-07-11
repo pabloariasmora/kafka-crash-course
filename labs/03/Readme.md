@@ -43,6 +43,25 @@ All Kafka distributions provide a command utility to see messages from the comma
 
 Kafka provides the utility `kafka-console-consumer.sh`
 
+5- Start a basic consumer loop from CLI.
+
+```
+kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 
+```
+
+Sadly no message was received.
+
+6- Type a new message on the Producer.
+
+```
+This message should be seen
+```
+
+If you need to read historical data, using the --from-beginning option. Otherwise, you will only be reading future data
+
+7- Stop consumer. Press `CTRL+C` to finish the process.
+
+8- Start a basic consumer loop from CLI using `--from-beginning` option.
 ```
 kafka/bin/kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 --from-beginning
 ```
