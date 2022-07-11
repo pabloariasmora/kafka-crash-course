@@ -65,3 +65,5 @@ If you need to read historical data, using the --from-beginning option. Otherwis
 ```
 kafka/bin/kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 --from-beginning
 ```
+
+Notice that the messages are not coming in order. This is because we only have one consumer so it is reading the messages from all 50 partitions. Order is only guaranteed within a partition.
