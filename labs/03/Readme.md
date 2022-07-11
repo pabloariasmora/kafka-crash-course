@@ -83,3 +83,11 @@ Notice that you will only have few messages, fell free to send messages, not all
 
 12- Start again step 10, so you can see again that the messages are in order.
 
+By default, the console consumer will show only the value of the Kafka record. Using this command you can show both the key and value.
+
+13- Using the formatter `kafka.tools.DefaultMessageFormatter` and using the properties `print.timestamp=true print.key=true print.value=true`:
+
+
+```
+kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 --formatter kafka.tools.DefaultMessageFormatter --property print.timestamp=true --property print.key=true --property print.value=true --from-beginning
+```
