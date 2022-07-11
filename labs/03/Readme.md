@@ -16,7 +16,7 @@ Ex:
 2- Create a new topic
 
 ```
-kafka-topics.sh --create --replication-factor 3 --partitions 50 --topic topic-lab3 --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092
+kafka-topics.sh --create --replication-factor 3 --partitions 3 --topic topic-lab3 --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092
 ```
 
 3- Start a new producer on one of the broker nodes.
