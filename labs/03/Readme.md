@@ -76,3 +76,10 @@ Notice that the messages are not coming in order. This is because we only have o
 ```
 kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 --from-beginning --partition 2
 ```
+
+Notice that you will only have few messages, fell free to send messages, not all are going to be display since they are been sent to other particions, but once you get the next one this should be in order with the first one.
+
+11- Stop consumer. Press `CTRL+C` to finish the process.
+
+12- Start again step 10, so you can see again that the messages are in order.
+
