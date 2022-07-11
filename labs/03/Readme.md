@@ -91,3 +91,27 @@ By default, the console consumer will show only the value of the Kafka record. U
 ```
 kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 --formatter kafka.tools.DefaultMessageFormatter --property print.timestamp=true --property print.key=true --property print.value=true --from-beginning
 ```
+
+14- Stop producer. Press `CTRL+C` to finish the process.
+
+15- Start again a new producer that all us to sent keys to the topic.
+
+```
+kafka-console-producer.sh --broker-list 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 --property "parse.key=true" --property "key.separator=:"
+```
+
+16- Sent at least 5 messages
+
+17- Send at least five messages
+
+```
+thisisakey1:Messagevalue1
+thisisakey2:Messagevalue2
+thisisakey3:Messagevalue3
+thisisakey4:Messagevalue4
+thisisakey5:Messagevalue5
+```
+
+
+
+
