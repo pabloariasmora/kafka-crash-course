@@ -62,8 +62,17 @@ If you need to read historical data, using the --from-beginning option. Otherwis
 7- Stop consumer. Press `CTRL+C` to finish the process.
 
 8- Start a basic consumer loop from CLI using `--from-beginning` option.
+
 ```
-kafka/bin/kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 --from-beginning
+kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 --from-beginning
 ```
 
 Notice that the messages are not coming in order. This is because we only have one consumer so it is reading the messages from all 50 partitions. Order is only guaranteed within a partition.
+
+9- Stop consumer. Press `CTRL+C` to finish the process.
+
+10- Read from just one partition using `--partition`
+
+```
+kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic topic-lab3 --from-beginning --partition 2
+```
