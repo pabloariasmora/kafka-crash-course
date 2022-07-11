@@ -16,7 +16,7 @@ Ex:
 2- Create a new topic
 
 ```
-kafka-topics.sh --create --replication-factor 3 --partitions 3 --topic topic-lab3 --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092
+kafka-topics.sh --create --replication-factor 3 --partitions 50 --topic topic-lab3 --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092
 ```
 
 3- Start a new producer on one of the broker nodes.
@@ -112,6 +112,77 @@ thisisakey4:Messagevalue4
 thisisakey5:Messagevalue5
 ```
 
+18- Review your consumer output.
 
+Kafka Consumers in Group 
+====
+
+Rule #1: You cannot have more consumers in a group than partitions in your Kafka topic, and therefore we first need to create a Kafka topic with a few partitions.
+
+1- Create a new topic
+
+```
+kafka-topics.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic consumers-group-topic --create --partitions 3 --replication-factor 3
+```
+
+2- Then launch a consumer in a consumer group, named `my-consumer-group`
+
+```
+kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic consumers-group-topic --group my-consumer-group 
+```
+
+3- On another server launch a second consumer in the same consumer group my-consumer-group (note we're using the exact same command)
+
+```
+kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic consumers-group-topic --group my-consumer-group 
+```
+
+3- On another server launch a third consumer in the same consumer group my-consumer-group
+
+```
+kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic consumers-group-topic --group my-consumer-group 
+```
+
+4- Now Each consumer in the consumer group my-consumer-group  will get assigned a partition. Produce a few string messages in the topic on another session on one of the servers.
+
+```
+kafka-console-producer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic consumers-group-topic
+...
+>First message
+>Second message
+>Third message
+>Fourth message
+```
+
+Each consumer will show only the messages produced on the partition that are assigned to it.
+
+If you stop a consumer, messages automatically get sent to the remaining consumers because consumers in a consumer group automatically perform a consumer rebalance.
+
+5- Stop one consumer. Press `CTRL+C` to finish the process.
+
+6- On the producer sent 3 more messages
+
+```
+>Fifth message
+>Sixth message
+>Seventh message
+```
+7- Now stop all other consumers. Press `CTRL+C` to finish the process.
+
+8- Keep on producing to the topic
+
+```
+>Eigth message
+>Ninth message
+>Tenth message
+```
+
+9- Start just one consumer. 
+
+```
+kafka-console-consumer.sh --bootstrap-server 172.31.21.170:9092,172.31.27.129:9092,172.31.26.124:9092 --topic consumers-group-topic --group my-consumer-group 
+```
+
+Upon restart of a consumer in the group, the consumer will read from the latest committed offsets and read only the messages you've just produced
 
 
